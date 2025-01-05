@@ -1,4 +1,5 @@
 require("rossvold.settings")
+require("rossvold.remap")
 require("rossvold.lazy_init") -- Set & remap has to always be in front of lazy_init
 require("rossvold.terminal.terminal")
 

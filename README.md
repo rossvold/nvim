@@ -1,3 +1,3 @@
 Nvim config documentation
 
-Submodule of https://github.com/theIbraDev/dotfiles
+Submodule of https://github.com/rossvold/dotfiles

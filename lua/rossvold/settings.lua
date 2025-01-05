@@ -92,5 +92,18 @@ vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lprev<CR>zz")
 
--- Open qflist
-vim.keymap.set("n", "<C-q>", "<cmd>copen<CR>")
+-- Toggle qflist
+vim.keymap.set("n", "<C-q>", function()
+    local qf_exists = false
+    for _, win in pairs(vim.fn.getwininfo()) do
+        if win["quickfix"] == 1 then
+            qf_exists = true
+            break
+        end
+    end
+    if qf_exists then
+        vim.cmd("cclose")
+    else
+        vim.cmd("copen")
+    end
+end)

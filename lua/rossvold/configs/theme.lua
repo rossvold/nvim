@@ -13,7 +13,7 @@ require("rose-pine").setup({
 			base = "#191724", -- Base of main
 			surface = "#1f1d2e", -- Surface of main
 			overlay = "#26233a", -- Overlay of main
-			gold = "#ea9d34", -- Gold of dawn
+			gold = "#e28b12",
 			rose = "#d7827e", -- Rose of dawn
 			muted = "#6e6a86",
 			sublte = "#9e9aba",

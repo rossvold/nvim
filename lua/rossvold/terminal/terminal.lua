@@ -63,6 +63,7 @@ local toggle_terminal = function()
 end
 
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>") -- Easily hit escape in terminal mode.
+vim.keymap.set("t", "<C-c>", "<c-\\><c-n>") -- Easily hit escape in terminal mode.
 vim.keymap.set("n", "<Leader>,t", function() -- Open terminal in new tab
 	vim.cmd.tabnew()
 	vim.cmd.term()

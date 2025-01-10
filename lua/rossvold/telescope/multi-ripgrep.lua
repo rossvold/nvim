@@ -14,11 +14,12 @@ return function(opts)
   opts.shortcuts = opts.shortcuts
     or {
       ["l"] = "*.lua",
-      ["v"] = "*.vim",
-      ["n"] = "*.{vim,lua}",
       ["c"] = "*.c",
       ["r"] = "*.rs",
       ["g"] = "*.go",
+      ["m"] = "*.md",
+      ["ts"] = "*.ts",
+      ["js"] = "*.js",
     }
   opts.pattern = opts.pattern or "%s"
 

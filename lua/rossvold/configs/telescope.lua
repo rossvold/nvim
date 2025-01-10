@@ -50,6 +50,7 @@ vim.keymap.set("n", "<leader>tr", builtin.registers, { desc = "[t]elescope [r]eg
 vim.keymap.set("n", "<leader>td", builtin.diagnostics, { desc = "[t]elescope [d]iagnostics" })
 vim.keymap.set("n", "<leader>th", builtin.help_tags, { desc = "[t]elescope [h]elp" })
 vim.keymap.set("n", "<leader>tgc", builtin.git_commits, { desc = "[t]elescope [g]it [c]ommits" })
+-- TODO: It would be nice to be able to glob out results here like we do in multigrep.
 vim.keymap.set("n", "<leader>tq", builtin.quickfix, { desc = "[t]elescope [q]uickfix" })
 vim.keymap.set("n", "<leader>tQ", builtin.quickfixhistory, { desc = "[t]elescope [Q]uickfix history" })
 vim.keymap.set("n", "<leader>tS", builtin.live_grep, { desc = "[t]elescope [S]earch live" })

@@ -65,7 +65,7 @@ require("mason-lspconfig").setup({
 		["tailwindcss"] = function()
 			lspconfig.tailwindcss.setup({
 				capabilities = capabilities,
-				filetypes = { "templ", "svelte", "javascript", "typescript", },
+				filetypes = { "templ", "svelte", "javascript", "typescript" },
 				settings = {
 					tailwindCSS = {
 						includeLanguages = {
@@ -122,10 +122,10 @@ vim.diagnostic.config({
 	signs = {
 		text = {
 			-- Important to have atleast one space on the right of each icon!
-			[vim.diagnostic.severity.ERROR] = ' ',
-			[vim.diagnostic.severity.WARN] = ' ',
-			[vim.diagnostic.severity.INFO] = ' ',
-			[vim.diagnostic.severity.HINT] = ' 󰌵',
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+			[vim.diagnostic.severity.HINT] = " 󰌵",
 		},
 	},
 })
@@ -138,43 +138,61 @@ autocmd("LspAttach", {
 	group = ibraGroup,
 	callback = function(e)
 		local opts = { buffer = e.buf }
-		vim.keymap.set("n", "gd", function()
-			vim.lsp.buf.definition()
-		end, opts)
+
+		-- Instant actions
 		vim.keymap.set("n", "K", function()
 			vim.lsp.buf.hover()
 		end, opts)
-		vim.keymap.set("n", "<leader>vd", function()
-			vim.diagnostic.open_float()
-		end, opts)
-		vim.keymap.set("n", "gr", function()
-			vim.lsp.buf.references()
-		end, opts)
-		vim.keymap.set("n", "gR", function()
-			vim.lsp.buf.rename()
-		end, opts)
-		vim.keymap.set("n", "gq", function()
-			vim.lsp.buf.workspace_symbol()
+		vim.keymap.set("n", "gd", function()
+			vim.lsp.buf.definition()
 		end, opts)
 		vim.keymap.set("n", "gD", function()
 			vim.lsp.buf.declaration()
 		end, opts)
-		vim.keymap.set("n", "gT", function()
+		vim.keymap.set("n", "gt", function()
 			vim.lsp.buf.type_definition()
 		end, opts)
 		vim.keymap.set("n", "ga", function()
 			vim.lsp.buf.code_action()
 		end, opts)
+		vim.keymap.set("n", "<Leader>rn", function()
+			vim.lsp.buf.rename()
+		end, opts)
+		-- Display
 		vim.keymap.set("n", "gl", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 		end, opts)
 
+		-- Quickfix related actions are always starting with gr
+		vim.keymap.set("n", "grr", function()
+			vim.lsp.buf.references()
+		end, opts)
+		vim.keymap.set("n", "grw", function()
+			vim.lsp.buf.workspace_symbol()
+		end, opts)
+		vim.keymap.set("n", "grd", function()
+			vim.lsp.buf.document_symbol()
+		end, opts)
+		vim.keymap.set("n", "gri", function()
+			vim.lsp.buf.implementation()
+		end, opts) -- Shows where things are implemented. Often time same as definition.
+
+		-- Diagnostics
+		vim.keymap.set("n", "<leader>vd", function()
+			vim.diagnostic.open_float()
+		end, opts)
 		local next_diagnostic_repeat, prev_diagnostic_repeat =
 			ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev) -- Makes moves repeatable
 		vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_next) -- moves regardless of the last direction
 		vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_previous)
 		vim.keymap.set({ "n", "x", "o" }, "md", next_diagnostic_repeat) -- Has to be below repeatable pair
 		vim.keymap.set({ "n", "x", "o" }, "Md", prev_diagnostic_repeat)
+
+		-- Keep for later
+		-- Call Hierarchy to quickfix
+		-- Not implemented in current lsp's Keep for future: vim.keymap.set("n", "grh", function() vim.lsp.buf.typehierarchy() end, opts)
+		-- Dependant on above. vim.keymap.set("n", "grc", function() vim.lsp.buf.incoming_calls() end, opts)
+		-- Dependant on above. vim.keymap.set("n", "gro", function() vim.lsp.buf.outgoing_calls() end, opts)
 	end,
 })
 

@@ -82,12 +82,19 @@ ins_left({
 
 ins_left({
 	function()
-		return string.match(vim.fn.getcwd(), '([^/]+)$')
+		return string.match(vim.fn.getcwd(), "([^/]+)$")
 	end,
 	icon = "",
 	color = { fg = colors.green, gui = "bold" },
 })
 
+ins_left({
+	function()
+		return vim.fn.expand("%:h"):sub(-20)
+	end,
+	icon = "path:",
+	color = { fg = colors.gray, gui = "bold" },
+})
 
 ins_left({ "location" })
 

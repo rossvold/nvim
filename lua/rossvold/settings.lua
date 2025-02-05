@@ -14,6 +14,17 @@ set.formatoptions:remove("o") -- Suprising how often this annoys me.
 set.wrap = true -- Always keep all text visible on screen.
 set.linebreak = true
 
+set.termguicolors = true
+-- Cursor
+vim.api.nvim_set_hl(0, 'Cursor1', { fg = 'white', bg = 'white' })  -- Normal mode (white cursor)
+vim.api.nvim_set_hl(0, 'Cursor2', { fg = 'green', bg = 'green' })  -- Insert mode (gray cursor)
+
+vim.opt.guicursor = {
+	"n-v-c-sm:block-cursor1",
+	"i-ci:block-cursor2-blinkwait1-blinkon200-blinkoff150",
+	"r-cr-o:hor20",
+}
+
 -- Indent / show blankspace
 set.tabstop = 2
 set.shiftwidth = 0 -- Defaults to 8, when 0 it's the same as tabstop
@@ -33,8 +44,6 @@ vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 set.backup = false
 set.undofile = true
-
-set.termguicolors = true
 
 set.scrolloff = 8
 set.isfname:append("@-@")

@@ -155,7 +155,7 @@ autocmd("LspAttach", {
 		vim.keymap.set("n", "ga", function()
 			vim.lsp.buf.code_action()
 		end, opts)
-		vim.keymap.set("n", "<Leader>rn", function()
+		vim.keymap.set("n", "gn", function()
 			vim.lsp.buf.rename()
 		end, opts)
 		-- Display

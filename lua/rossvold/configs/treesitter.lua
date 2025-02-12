@@ -31,7 +31,7 @@ require("nvim-treesitter.configs").setup({
 		"vimdoc",
 		"query",
 		"templ",
-		"python"
+		"python",
 	},
 	-- THE GOAT OF VIM STRUCTURAL EDITING. Select, move, quries.
 	textobjects = {
@@ -88,6 +88,15 @@ require("nvim-treesitter.configs").setup({
 				["MA"] = "@attribute.outer", -- HTML attribute
 				["Mr"] = "@return.outer",
 				["Me"] = "@element.start",
+			},
+		},
+		swap = {
+			enable = true,
+			swap_next = {
+				["<leader>l"] = "@parameter.inner",
+			},
+			swap_previous = {
+				["<leader>h"] = "@parameter.inner",
 			},
 		},
 		-- End of textobjects

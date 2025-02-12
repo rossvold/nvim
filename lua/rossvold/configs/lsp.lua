@@ -158,6 +158,9 @@ autocmd("LspAttach", {
 		vim.keymap.set("n", "gn", function()
 			vim.lsp.buf.rename()
 		end, opts)
+		vim.keymap.set("n", "<F5>", function()
+			vim.cmd.LspRestart()
+		end, opts)
 		-- Display
 		vim.keymap.set("n", "gl", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())

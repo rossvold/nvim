@@ -12,7 +12,7 @@ ls.add_snippets("lua", {
 		t('world")'),
 	}),
 
-	s("vimcmd", {
+	s("cmd", {
 		t('vim.cmd([['),
 		i(1),
 		t(']])'),

@@ -92,7 +92,6 @@ ins_left({
 	function()
 		return vim.fn.expand("%:h"):sub(-20)
 	end,
-	icon = "path:",
 	color = { fg = colors.gray, gui = "bold" },
 })
 

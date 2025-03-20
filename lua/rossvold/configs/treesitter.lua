@@ -20,6 +20,7 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = {
 		"rust",
 		"c",
+		"zig",
 		"javascript",
 		"typescript",
 		"scss",
@@ -49,8 +50,8 @@ require("nvim-treesitter.configs").setup({
 				["ii"] = "@conditional.inner",
 				["ao"] = "@class.outer",
 				["io"] = "@class.inner",
-				["aa"] = "@parameter_actual.outer",
-				["ia"] = "@parameter_actual.inner",
+				["ap"] = "@parameter_actual.outer",
+				["ip"] = "@parameter_actual.inner",
 				["iA"] = "@attribute.inner",
 				["aA"] = "@attribute.outer",
 				["ir"] = "@return.inner",

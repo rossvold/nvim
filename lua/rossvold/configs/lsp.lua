@@ -42,9 +42,6 @@ require("mason-lspconfig").setup({
 		["rust_analyzer"] = function()
 			lspconfig.rust_analyzer.setup({
 				capabilities = capabilities,
-				on_attach = function()
-					vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
-				end,
 			})
 		end,
 
@@ -149,7 +146,7 @@ autocmd("LspAttach", {
 		vim.keymap.set("n", "gD", function()
 			vim.lsp.buf.declaration()
 		end, opts)
-		vim.keymap.set("n", "gt", function()
+		vim.keymap.set("n", "gT", function()
 			vim.lsp.buf.type_definition()
 		end, opts)
 		vim.keymap.set("n", "ga", function()

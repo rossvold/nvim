@@ -11,7 +11,7 @@ set.splitright = true -- Vertical splits will be to the right
 set.shada = { "'10", "<0", "s10", "h" } -- Files to remember
 set.swapfile = false
 set.formatoptions:remove("o") -- Suprising how often this annoys me.
-set.wrap = true -- Always keep all text visible on screen.
+set.wrap = false -- Always keep all text visible on screen.
 set.linebreak = true
 
 set.termguicolors = true

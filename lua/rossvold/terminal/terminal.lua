@@ -68,7 +68,7 @@ vim.keymap.set("n", "<Leader>,t", function() -- Open terminal in new tab
 	vim.cmd.tabnew()
 	vim.cmd.term()
 end)
-vim.keymap.set("n", "<Leader>st", function() -- Open small terminal at bottom
+vim.keymap.set("n", "<Leader>sw", function() -- Open small terminal at bottom
 	vim.cmd.vnew()
 	vim.cmd.term()
 	vim.cmd.wincmd("J")

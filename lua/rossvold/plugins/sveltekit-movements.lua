@@ -1,5 +1,5 @@
 return {
-	{ dir = "~/personal/sveltekit-movements.nvim/",
+	{ dir = "~/projects/sveltekit-movements.nvim/",
 		config = function()
         require('rossvold.configs.sveltekit-movements')
 		end,

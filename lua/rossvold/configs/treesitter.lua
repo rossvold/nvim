@@ -50,8 +50,6 @@ require("nvim-treesitter.configs").setup({
 				["ii"] = "@conditional.inner",
 				["ao"] = "@class.outer",
 				["io"] = "@class.inner",
-				["ap"] = "@parameter_actual.outer",
-				["ip"] = "@parameter_actual.inner",
 				["iA"] = "@attribute.inner",
 				["aA"] = "@attribute.outer",
 				["ir"] = "@return.inner",

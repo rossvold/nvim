@@ -5,7 +5,8 @@ return {
 			"rcarriga/nvim-dap-ui",
 			"theHamsta/nvim-dap-virtual-text",
 			"nvim-neotest/nvim-nio",
-			"williamboman/mason.nvim",
+			{ "mason-org/mason.nvim", version = "^1.0.0" },
+			{ "mason-org/mason-lspconfig.nvim", version = "^1.0.0" },
 			"jbyuki/one-small-step-for-vimkind",
 			-- Languages
 			"leoluz/nvim-dap-go", -- GO

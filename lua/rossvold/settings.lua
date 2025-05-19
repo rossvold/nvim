@@ -46,6 +46,7 @@ set.backup = false
 set.undofile = true
 
 set.scrolloff = 8
+set.sidescrolloff = 20 -- Holy shid this is so good
 set.isfname:append("@-@")
 
 set.updatetime = 50

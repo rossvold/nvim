@@ -14,6 +14,7 @@ require("mason-lspconfig").setup({
 		"svelte",
 		"ts_ls",
 		"templ",
+		"sqlls",
 	},
 	handlers = {
 		-- The first entry (without a key) will be the default handler and will be called for each installed server
@@ -36,6 +37,24 @@ require("mason-lspconfig").setup({
 						},
 					},
 				},
+			})
+		end,
+
+		["sqlls"] = function()
+			lspconfig.sqlls.setup({
+				capabilities = capabilities,
+				settings = {
+					sqlLanguageServer = {
+						connections = {
+							{
+								name = "sqlite",
+								adapter = "sqlite",
+								filename = "./sql/schema.db", -- relative to project root
+							},
+						},
+					},
+				},
+				root_dir = lspconfig.util.root_pattern(".sqllsrc.json", ".git", "sql"),
 			})
 		end,
 

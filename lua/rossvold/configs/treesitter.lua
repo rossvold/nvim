@@ -121,3 +121,65 @@ require("treesitter-context").setup({
 	zindex = 20, -- The Z-index of the context window
 	on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 })
+
+local ts = vim.treesitter
+
+local function query_to_qflist(capture_name, query_str)
+	local bufnr = vim.api.nvim_get_current_buf()
+	local parser = ts.get_parser(bufnr, vim.bo.filetype)
+	local tree = parser:parse()[1]
+	local root = tree:root()
+
+	local ok, ts_query = pcall(ts.query.parse, vim.bo.filetype, query_str)
+	if not ok then
+		vim.notify("Query failed: " .. ts_query, vim.log.levels.ERROR)
+		return
+	end
+
+	local qflist = {}
+	for id, node in ts_query:iter_captures(root, bufnr, 0, -1) do
+		local name = ts_query.captures[id]
+		if name == capture_name then
+			local start_row, start_col = node:range()
+			local line = vim.api.nvim_buf_get_lines(bufnr, start_row, start_row + 1, false)[1]
+			table.insert(qflist, {
+				bufnr = bufnr,
+				lnum = start_row + 1,
+				col = start_col + 1,
+				text = line,
+			})
+		end
+	end
+
+	if #qflist == 0 then
+		vim.notify("No matches found for " .. capture_name, vim.log.levels.INFO)
+	else
+		vim.fn.setqflist(qflist, "r")
+		vim.cmd("copen")
+	end
+end
+
+-- Map of key suffix to {capture_name, query}
+local query_map = {
+	f = { "function.outer", [[((function_declaration) @function.outer)]] },
+	F = { "function.call", [[(call_expression) @function.call]] },
+	r = { "return.outer", [[(return_statement) @return.outer]] },
+	l = { "loop.outer", [[(for_statement) @loop.outer (while_statement) @loop.outer]] },
+	c = { "comment.outer", [[(comment) @comment.outer]] },
+	i = { "conditional.outer", [[(if_statement) @conditional.outer (switch_statement) @conditional.outer]] },
+	o = { "class.outer", [[(class_declaration) @class.outer]] },
+	a = { "attribute.outer", [[(attribute) @attribute.outer]] },
+}
+
+for key, data in pairs(query_map) do
+	local capture, query = unpack(data)
+	local command_name = "TSQF" .. key
+
+	vim.api.nvim_create_user_command(command_name, function()
+		query_to_qflist(capture, query)
+	end, {})
+
+	vim.keymap.set("n", "<Leader>m" .. key, function()
+		vim.cmd(command_name)
+	end, { desc = "TS query " .. capture .. " to quickfix" })
+end

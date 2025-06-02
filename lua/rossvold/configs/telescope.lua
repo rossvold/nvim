@@ -22,9 +22,11 @@ require("telescope").setup({
 			height = vim.o.lines,
 			width = vim.o.columns,
 			prompt_position = "top",
-			preview_height = 0.4, -- 60% of available lines
 			preview_cutoff = 2,
 			mirror = true,
+			vertical = {
+				preview_height = 0.4, -- 40% of available lines for preview
+			},
 		},
 	},
 

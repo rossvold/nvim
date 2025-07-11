@@ -40,24 +40,6 @@ require("mason-lspconfig").setup({
 			})
 		end,
 
-		["sqlls"] = function()
-			lspconfig.sqlls.setup({
-				capabilities = capabilities,
-				settings = {
-					sqlLanguageServer = {
-						connections = {
-							{
-								name = "sqlite",
-								adapter = "sqlite",
-								filename = "./sql/schema.db", -- relative to project root
-							},
-						},
-					},
-				},
-				root_dir = lspconfig.util.root_pattern(".sqllsrc.json", ".git", "sql"),
-			})
-		end,
-
 		["rust_analyzer"] = function()
 			lspconfig.rust_analyzer.setup({
 				capabilities = capabilities,
@@ -206,12 +188,6 @@ autocmd("LspAttach", {
 		vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_previous)
 		vim.keymap.set({ "n", "x", "o" }, "md", next_diagnostic_repeat) -- Has to be below repeatable pair
 		vim.keymap.set({ "n", "x", "o" }, "Md", prev_diagnostic_repeat)
-
-		-- Keep for later
-		-- Call Hierarchy to quickfix
-		-- Not implemented in current lsp's Keep for future: vim.keymap.set("n", "grh", function() vim.lsp.buf.typehierarchy() end, opts)
-		-- Dependant on above. vim.keymap.set("n", "grc", function() vim.lsp.buf.incoming_calls() end, opts)
-		-- Dependant on above. vim.keymap.set("n", "gro", function() vim.lsp.buf.outgoing_calls() end, opts)
 	end,
 })
 

@@ -161,8 +161,10 @@ end
 
 -- Map of key suffix to {capture_name, query}
 local query_map = {
-	f = { "function.outer", [[((function_declaration) @function.outer)]] },
-	F = { "function.call", [[(call_expression) @function.call]] },
+	f = { "function.outer", [[
+		(function_declaration) @function.outer
+		(arrow_function) @function.outer
+]] },
 	r = { "return.outer", [[(return_statement) @return.outer]] },
 	l = { "loop.outer", [[(for_statement) @loop.outer (while_statement) @loop.outer]] },
 	c = { "comment.outer", [[(comment) @comment.outer]] },

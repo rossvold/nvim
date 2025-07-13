@@ -12,7 +12,7 @@ local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load() --Friendly snippets
 luasnip.config.setup({})
 
-local kind_formatter = lspkind.cmp_format {
+local kind_formatter = lspkind.cmp_format({
 	mode = "symbol_text",
 	maxwidth = 50,
 	ellipsis_char = "...",
@@ -27,7 +27,7 @@ local kind_formatter = lspkind.cmp_format {
 		tn = "[TabNine]",
 		eruby = "[erb]",
 	},
-}
+})
 
 cmp.setup({
 	preselect = cmp.PreselectMode.None,

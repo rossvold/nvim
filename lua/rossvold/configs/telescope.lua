@@ -1,7 +1,6 @@
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 require("telescope").load_extension("ui-select")
-require("telescope").load_extension("git_worktree")
 
 require("telescope").setup({
 	defaults = {
@@ -64,10 +63,3 @@ end)
 vim.keymap.set("n", "<leader>tgb", builtin.git_branches, { desc = "[t]elescope [g]it [b]ranches" })
 vim.keymap.set("n", "<leader>tb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>tn", "<CMD>Telescope notify<CR>")
-
-vim.keymap.set("n", "<leader>tw", require("telescope").extensions.git_worktree.git_worktree, {
-	desc = "[t]elescope [w]orktrees",
-})
-vim.keymap.set("n", "<leader>tW", require("telescope").extensions.git_worktree.create_git_worktree, {
-	desc = "[t]elescope [W]orktrees",
-})

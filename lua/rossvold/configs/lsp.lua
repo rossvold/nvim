@@ -130,10 +130,10 @@ vim.diagnostic.config({
 
 local autocmd = vim.api.nvim_create_autocmd
 
-local ibraGroup = vim.api.nvim_create_augroup("rossvold_worktree", {})
+local rossGroup = vim.api.nvim_create_augroup("rossvold_worktree", {})
 
 autocmd("LspAttach", {
-	group = ibraGroup,
+	group = rossGroup,
 	callback = function(e)
 		local opts = { buffer = e.buf }
 

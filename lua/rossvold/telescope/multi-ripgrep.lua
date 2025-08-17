@@ -20,7 +20,7 @@ return function(opts)
 			["m"] = "*.md",
 			["ts"] = "*.ts",
 			["js"] = "*.js",
-			["svelte"] = "*.svelte",
+			["s"] = "*.svelte",
 		}
 	opts.pattern = opts.pattern or "%s"
 

@@ -1,3 +1,5 @@
+-- luacheck: globals vim
+---@diagnostic disable: undefined-global
 require("nvim-treesitter.configs").setup({
 	-- A list of parser names, or "all" (the five listed parsers should always be installed)
 	sync_install = false,
@@ -128,16 +130,56 @@ require("treesitter-context").setup({
 
 local ts = vim.treesitter
 
-local function query_to_qflist(capture_name, query_str)
+local function query_to_qflist(capture_name, fallback_query)
 	local bufnr = vim.api.nvim_get_current_buf()
-	local parser = ts.get_parser(bufnr, vim.bo.filetype)
+	local lang = require("nvim-treesitter.parsers").ft_to_lang(vim.bo.filetype)
+	local parser = ts.get_parser(bufnr, lang)
 	local tree = parser:parse()[1]
 	local root = tree:root()
 
-	local ok, ts_query = pcall(ts.query.parse, vim.bo.filetype, query_str)
-	if not ok then
-		vim.notify("Query failed: " .. ts_query, vim.log.levels.ERROR)
-		return
+	-- Prefer the language's installed/extended textobjects query from runtime (honors after/queries)
+	local ts_query
+	local get = vim.treesitter.query.get or vim.treesitter.query.get_query
+	local ok_get, q = pcall(get, lang, "textobjects")
+	if ok_get and q then
+		-- Ensure the capture exists in this language
+		local has_capture = false
+		for _, name in pairs(q.captures or {}) do
+			if name == capture_name then
+				has_capture = true
+				break
+			end
+		end
+		if has_capture then
+			ts_query = q
+		else
+			if fallback_query and #fallback_query > 0 then
+				local ok_parse, parsed = pcall(ts.query.parse, lang, fallback_query)
+				if not ok_parse then
+					vim.notify("Query failed: " .. parsed, vim.log.levels.ERROR)
+					return
+				end
+				ts_query = parsed
+			else
+				vim.notify(("Missing capture '%s' for language '%s'. Add it under after/queries/%s/textobjects.scm.")
+					:format(capture_name, lang, lang), vim.log.levels.WARN)
+				return
+			end
+		end
+	else
+		-- No language textobjects query available; try fallback if provided
+		if fallback_query and #fallback_query > 0 then
+			local ok_parse, parsed = pcall(ts.query.parse, lang, fallback_query)
+			if not ok_parse then
+				vim.notify("Query failed: " .. parsed, vim.log.levels.ERROR)
+				return
+			end
+			ts_query = parsed
+		else
+			vim.notify(("No textobjects query for language '%s'. Add one under after/queries/%s/textobjects.scm.")
+				:format(lang, lang), vim.log.levels.WARN)
+			return
+		end
 	end
 
 	local qflist = {}
@@ -163,30 +205,30 @@ local function query_to_qflist(capture_name, query_str)
 	end
 end
 
--- Map of key suffix to {capture_name, query}
+-- Map of key suffix to {capture_name, optional_fallback_query}
 local query_map = {
-	f = { "function.outer", [[((function_declaration) @function.outer)]] },
-	F = { "function.outer", [[
-		(function_declaration) @function.outer
-		(arrow_function) @function.outer
-]] },
-	r = { "return.outer", [[(return_statement) @return.outer]] },
-	l = { "loop.outer", [[(for_statement) @loop.outer (while_statement) @loop.outer]] },
-	c = { "comment.outer", [[(comment) @comment.outer]] },
-	i = { "conditional.outer", [[(if_statement) @conditional.outer (switch_statement) @conditional.outer]] },
-	o = { "class.outer", [[(class_declaration) @class.outer]] },
-	a = { "attribute.outer", [[(attribute) @attribute.outer]] },
+	f = { "function.outer" },
+	F = { "function.outer" },
+	r = { "return.outer" },
+	l = { "loop.outer" },
+	c = { "comment.outer" },
+	i = { "conditional.outer" },
+	o = { "class.outer" },
+	a = { "attribute.outer" },
+	s = { "string" },
+	I = { "integer" },
 }
 
 for key, data in pairs(query_map) do
-	local capture, query = unpack(data)
+	local capture, fallback = data[1], data[2]
 	local command_name = "TSQF" .. key
 
 	vim.api.nvim_create_user_command(command_name, function()
-		query_to_qflist(capture, query)
+		query_to_qflist(capture, fallback)
 	end, {})
 
 	vim.keymap.set("n", "<Leader>m" .. key, function()
 		vim.cmd(command_name)
 	end, { desc = "TS query " .. capture .. " to quickfix" })
 end
+

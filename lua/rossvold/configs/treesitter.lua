@@ -74,6 +74,7 @@ require("nvim-treesitter.configs").setup({
 				["mA"] = "@attribute.outer", -- HTML attribute
 				["mr"] = "@return.outer",
 				["me"] = "@element.start",
+				["ms"] = "@string", -- Jump to next string
 			},
 			goto_previous_start = {
 				["Mf"] = "@function.outer",
@@ -88,6 +89,7 @@ require("nvim-treesitter.configs").setup({
 				["MA"] = "@attribute.outer", -- HTML attribute
 				["Mr"] = "@return.outer",
 				["Me"] = "@element.start",
+				["Ms"] = "@string",
 			},
 		},
 		swap = {

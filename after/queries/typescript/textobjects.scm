@@ -5,3 +5,4 @@
 (return_statement
   (_)? @return.inner) @return.outer
 (string) @string
+(number) @integer

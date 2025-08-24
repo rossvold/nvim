@@ -38,16 +38,15 @@ return function(opts)
 				table.insert(args, prompt_split[1])
 			end
 
+			-- Glob filter
 			if prompt_split[2] then
 				table.insert(args, "-g")
-
 				local pattern
 				if opts.shortcuts[prompt_split[2]] then
 					pattern = opts.shortcuts[prompt_split[2]]
 				else
 					pattern = prompt_split[2]
 				end
-
 				table.insert(args, string.format(opts.pattern, pattern))
 			end
 
@@ -56,6 +55,7 @@ return function(opts)
 				{ "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case" },
 			})
 		end,
+
 		entry_maker = make_entry.gen_from_vimgrep(opts),
 		cwd = opts.cwd,
 	})

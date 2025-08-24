@@ -69,6 +69,7 @@ cmp.setup({
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
 		{ name = "path" },
+		{ name = "supermaven" },
 	}, {
 			{ name = "buffer" },
 		}),

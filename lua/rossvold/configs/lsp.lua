@@ -111,10 +111,12 @@ vim.diagnostic.config({
 	float = {
 		focusable = true,
 		style = "minimal",
-		border = "rounded",
+		border = "double",
 		source = "always",
 		header = "",
 		prefix = "",
+		max_width = 80,
+		max_height = 20,
 	},
 
 	signs = {
@@ -130,6 +132,8 @@ vim.diagnostic.config({
 
 local autocmd = vim.api.nvim_create_autocmd
 
+
+
 local rossGroup = vim.api.nvim_create_augroup("rossvold_worktree", {})
 
 autocmd("LspAttach", {
@@ -139,7 +143,12 @@ autocmd("LspAttach", {
 
 		-- Instant actions
 		vim.keymap.set("n", "K", function()
-			vim.lsp.buf.hover()
+			vim.lsp.buf.hover({
+				focusable = true,
+				border = "double",
+				close_events = { "CursorMoved", "CursorMovedI", "BufHidden", "InsertCharPre" },
+				wrap = false,
+			})
 		end, opts)
 		vim.keymap.set("n", "gd", function()
 			vim.lsp.buf.definition()

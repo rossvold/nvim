@@ -88,7 +88,7 @@ require("nvim-treesitter.configs").setup({
 				["Mv"] = "@assignment.rhs", -- Variable select value
 				["Mo"] = "@class.outer",
 				["Mp"] = "@parameter_actual.outer",
-				["mT"] = "@element_text", -- HTLM ELEMENT TEXT
+				["Mt"] = "@element_text", -- HTLM ELEMENT TEXT
 				["MA"] = "@attribute.outer", -- HTML attribute
 				["Mr"] = "@return.outer",
 				["Me"] = "@element.start",
@@ -208,17 +208,18 @@ end
 -- Map of key suffix to {capture_name, optional_fallback_query}
 local query_map = {
 	f = { "function.outer" },
-	F = { "function.outer" },
 	r = { "return.outer" },
 	l = { "loop.outer" },
 	c = { "comment.outer" },
 	i = { "conditional.outer" },
 	o = { "class.outer" },
-	a = { "attribute.outer" },
 	s = { "string" },
 	I = { "integer" },
+	A = { "attribute.outer" },
+	a = { "argument" },
+	p = { "parameter" },
+	t = { "element_text" },
 }
-
 for key, data in pairs(query_map) do
 	local capture, fallback = data[1], data[2]
 	local command_name = "TSQF" .. key

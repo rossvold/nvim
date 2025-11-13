@@ -1,5 +1,8 @@
 -- Fugitive
-vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
+vim.keymap.set("n", "<leader>gg", function ()
+	vim.cmd([[tab G]])
+end
+)
 
 local rossvold_fugitive = vim.api.nvim_create_augroup("rossvold_Fugitive", {})
 

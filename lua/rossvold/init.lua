@@ -33,7 +33,11 @@ autocmd("TextYankPost", {
 autocmd({ "BufWritePre" }, {
 	group = ibraGroup,
 	pattern = "*",
-	command = [[%s/\s\+$//e]],
+	callback = function()
+		local cursor_pos = vim.api.nvim_win_get_cursor(0)
+		vim.cmd([[%s/\s\+$//e]])
+		vim.api.nvim_win_set_cursor(0, cursor_pos)
+	end,
 })
 
 vim.g.netrw_browse_split = 0

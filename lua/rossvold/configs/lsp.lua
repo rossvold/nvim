@@ -3,7 +3,6 @@ if pcall(require, "cmp_nvim_lsp") then
 	capabilities = require("cmp_nvim_lsp").default_capabilities()
 end
 local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-local lspconfig = require("lspconfig")
 
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -21,13 +20,14 @@ require("mason-lspconfig").setup({
 		-- that doesn't have a dedicated handler.
 
 		function(server_name) -- default handler (optional)
-			require("lspconfig")[server_name].setup({
+			vim.lsp.config[server_name] = {
 				capabilities = capabilities,
-			})
+			}
+			vim.lsp.enable(server_name)
 		end, -- Next, is targeted overrides for spesific servers.
 
 		["lua_ls"] = function()
-			lspconfig.lua_ls.setup({
+			vim.lsp.config.lua_ls = {
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -37,31 +37,35 @@ require("mason-lspconfig").setup({
 						},
 					},
 				},
-			})
+			}
+			vim.lsp.enable("lua_ls")
 		end,
 
 		["rust_analyzer"] = function()
-			lspconfig.rust_analyzer.setup({
+			vim.lsp.config.rust_analyzer = {
 				capabilities = capabilities,
-			})
+			}
+			vim.lsp.enable("rust_analyzer")
 		end,
 
 		["html"] = function()
-			lspconfig.html.setup({
+			vim.lsp.config.html = {
 				capabilities = capabilities,
 				filetypes = { "html", "templ" },
-			})
+			}
+			vim.lsp.enable("html")
 		end,
 
 		["htmx"] = function()
-			lspconfig.html.setup({
+			vim.lsp.config.html = {
 				capabilities = capabilities,
 				filetypes = { "html", "templ" },
-			})
+			}
+			vim.lsp.enable("html")
 		end,
 
 		["tailwindcss"] = function()
-			lspconfig.tailwindcss.setup({
+			vim.lsp.config.tailwindcss = {
 				capabilities = capabilities,
 				filetypes = { "templ", "svelte", "javascript", "typescript" },
 				settings = {
@@ -71,11 +75,12 @@ require("mason-lspconfig").setup({
 						},
 					},
 				},
-			})
+			}
+			vim.lsp.enable("tailwindcss")
 		end,
 
 		["ts_ls"] = function()
-			lspconfig.ts_ls.setup({
+			vim.lsp.config.ts_ls = {
 				capabilities = capabilities,
 				settings = {
 					javascript = {
@@ -101,7 +106,28 @@ require("mason-lspconfig").setup({
 						},
 					},
 				},
-			})
+				handlers = {
+					["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+						if result.diagnostics == nil then
+							return
+						end
+						local idx = 1
+						while idx <= #result.diagnostics do
+							local entry = result.diagnostics[idx]
+							if entry.code == 80001 then
+								table.remove(result.diagnostics, idx)
+							else
+								idx = idx + 1
+							end
+						end
+						pcall(function()
+							require("ts-error-translator").translate_diagnostics(nil, result, ctx)
+						end)
+						vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+					end,
+				},
+			}
+			vim.lsp.enable("ts_ls")
 		end,
 	},
 })
@@ -131,8 +157,6 @@ vim.diagnostic.config({
 })
 
 local autocmd = vim.api.nvim_create_autocmd
-
-
 
 local rossGroup = vim.api.nvim_create_augroup("rossvold_worktree", {})
 

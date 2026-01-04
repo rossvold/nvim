@@ -64,21 +64,6 @@ require("mason-lspconfig").setup({
 			vim.lsp.enable("html")
 		end,
 
-		["tailwindcss"] = function()
-			vim.lsp.config.tailwindcss = {
-				capabilities = capabilities,
-				filetypes = { "templ", "svelte", "javascript", "typescript" },
-				settings = {
-					tailwindCSS = {
-						includeLanguages = {
-							templ = "html",
-						},
-					},
-				},
-			}
-			vim.lsp.enable("tailwindcss")
-		end,
-
 		["ts_ls"] = function()
 			vim.lsp.config.ts_ls = {
 				capabilities = capabilities,

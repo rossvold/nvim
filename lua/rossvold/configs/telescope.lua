@@ -67,6 +67,3 @@ vim.keymap.set("n", "<leader>tgb", builtin.git_branches, { desc = "[t]elescope [
 vim.keymap.set("n", "<leader>tb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>tn", "<CMD>Telescope notify<CR>")
 vim.keymap.set("n", "<leader>to", builtin.oldfiles, { desc = "[t]elescope [o]ld files" })
-vim.keymap.set("n", "<leader>tu", builtin.unsaved, { desc = "[t]elescope [o]ld files" })
-
-

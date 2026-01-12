@@ -9,27 +9,26 @@ require("neotest").setup({
 	},
 })
 
-vim.keymap.set("n", "<leader>tt", function()
+vim.keymap.set("n", "<leader>nt", function()
 	require("neotest").summary.toggle()
-end, { desc = "Debug: Summary Toggle" })
+end, { desc = "Summary Toggle" })
 
--- vim.keymap.set("n", "tr", function()
--- 	require("neotest").run.run({ suite = false, testify = true })
--- end, { desc = "Debug: Running Nearest Test" })
---
--- vim.keymap.set("n", "ts", function()
--- 	require("neotest").run.run({ suite = true, testify = true })
--- end, { desc = "Debug: Running Test Suite" })
---
--- vim.keymap.set("n", "td", function()
--- 	require("neotest").run.run({ suite = false, testify = true, strategy = "dap" })
--- end, { desc = "Debug: Debug Nearest Test" })
---
--- vim.keymap.set("n", "to", function()
--- 	require("neotest").output.open()
--- end, { desc = "Debug: Open test output" })
---
--- vim.keymap.set("n", "ta", function()
--- 	require("neotest").run.run(vim.fn.getcwd())
--- end, { desc = "Debug: Open test output" })
---
+vim.keymap.set("n", "<leader>nr", function()
+	require("neotest").run.run({ suite = false, testify = true })
+end, { desc = "Running Nearest Test" })
+
+vim.keymap.set("n", "<leader>ns", function()
+	require("neotest").run.run({ suite = true, testify = true })
+end, { desc = "Running Test Suite" })
+
+vim.keymap.set("n", "<leader>nd", function()
+	require("neotest").run.run({ suite = false, testify = true, strategy = "dap" })
+end, { desc = "Debug Nearest Test" })
+
+vim.keymap.set("n", "<leader>no", function()
+	require("neotest").output.open()
+end, { desc = "Open test output" })
+
+vim.keymap.set("n", "<leader>na", function()
+	require("neotest").run.run(vim.fn.getcwd())
+end, { desc = "Open test output" })

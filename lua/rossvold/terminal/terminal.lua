@@ -68,12 +68,12 @@ vim.keymap.set("n", "<Leader>,t", function() -- Open terminal in new tab
 	vim.cmd.tabnew()
 	vim.cmd.term()
 end)
-vim.keymap.set("n", "<Leader>sw", function() -- Open small terminal at bottom
+vim.keymap.set("n", "<Leader>,w", function() -- Open small terminal at bottom
 	vim.cmd.vnew()
 	vim.cmd.term()
 	vim.cmd.wincmd("J")
 	vim.api.nvim_win_set_height(0, 5)
 end)
-vim.keymap.set("n", "<Leader>sf", function () -- Toggle floating terminal
+vim.keymap.set("n", "<Leader>,f", function () -- Toggle floating terminal
 	toggle_terminal()
 end)

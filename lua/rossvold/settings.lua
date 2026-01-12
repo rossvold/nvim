@@ -51,7 +51,7 @@ set.isfname:append("@-@")
 
 set.updatetime = 50
 
-set.colorcolumn = "80,120"
+set.colorcolumn = "80,100,120"
 
 vim.cmd([[
 augroup highlight_yank

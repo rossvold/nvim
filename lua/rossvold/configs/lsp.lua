@@ -89,6 +89,9 @@ require("mason-lspconfig").setup({
 							includeInlayPropertyDeclarationTypeHints = true,
 							includeInlayVariableTypeHints = false,
 						},
+						tsserver = {
+							exclude = { ".svelte-kit", ".svelte-kit/types/**/*" },
+						},
 					},
 				},
 				handlers = {

@@ -10,7 +10,7 @@ require("rose-pine").setup({
 	palette = {
 		-- Override the builtin palette per variant
 		moon = {
-			base = "#191724", -- Base of main
+			base = "#000000", -- Base of main
 			surface = "#1f1d2e", -- Surface of main
 			overlay = "#26233a", -- Overlay of main
 			gold = "#e28b12",

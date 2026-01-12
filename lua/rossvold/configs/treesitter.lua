@@ -53,6 +53,8 @@ require("nvim-treesitter.configs").setup({
 				["ii"] = "@conditional.inner",
 				["ao"] = "@class.outer",
 				["io"] = "@class.inner",
+				["iP"] = "@parameter_actual.inner",
+				["aP"] = "@parameter_actual.outer",
 				["iA"] = "@attribute.inner",
 				["aA"] = "@attribute.outer",
 				["ir"] = "@return.inner",
@@ -72,6 +74,7 @@ require("nvim-treesitter.configs").setup({
 				["mv"] = "@assignment.rhs", -- Variable select value
 				["mo"] = "@class.outer",
 				["mp"] = "@parameter_actual.outer",
+				["ma"] = "@arguments",
 				["mt"] = "@element_text", -- HTML ELEMENT TEXT
 				["mA"] = "@attribute.outer", -- HTML attribute
 				["mr"] = "@return.outer",
@@ -88,6 +91,7 @@ require("nvim-treesitter.configs").setup({
 				["Mv"] = "@assignment.rhs", -- Variable select value
 				["Mo"] = "@class.outer",
 				["Mp"] = "@parameter_actual.outer",
+				["Ma"] = "@arguments",
 				["Mt"] = "@element_text", -- HTLM ELEMENT TEXT
 				["MA"] = "@attribute.outer", -- HTML attribute
 				["Mr"] = "@return.outer",
@@ -115,7 +119,7 @@ vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_previous)
 
 require("treesitter-context").setup({
 	enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-	max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
+	max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
 	min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 	line_numbers = true,
 	multiline_threshold = 20, -- Maximum number of lines to show for a single context
@@ -215,9 +219,8 @@ local query_map = {
 	o = { "class.outer" },
 	s = { "string" },
 	I = { "integer" },
-	A = { "attribute.outer" },
-	a = { "argument" },
-	p = { "parameter" },
+	a = { "arguments" },
+	p = { "parameters" },
 	t = { "element_text" },
 }
 for key, data in pairs(query_map) do
@@ -233,3 +236,23 @@ for key, data in pairs(query_map) do
 	end, { desc = "TS query " .. capture .. " to quickfix" })
 end
 
+-- Toggle inspectTree
+local inspect_tree_buf = nil
+vim.keymap.set("n", "<Leader>i", function()
+	-- Check if InspectTree window is already open
+	if inspect_tree_buf and vim.api.nvim_buf_is_valid(inspect_tree_buf) then
+		-- Find and close the window containing this buffer
+		for _, win in ipairs(vim.api.nvim_list_wins()) do
+			if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == inspect_tree_buf then
+				vim.api.nvim_win_close(win, true)
+				inspect_tree_buf = nil
+				return
+			end
+		end
+		inspect_tree_buf = nil
+	end
+	-- Open InspectTree
+	vim.cmd.InspectTree()
+	-- Store the buffer number
+	inspect_tree_buf = vim.api.nvim_get_current_buf()
+end)

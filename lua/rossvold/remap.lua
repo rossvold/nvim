@@ -27,7 +27,6 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
-vim.keymap.set({ "n", "v", "i" }, "<A-s>", ":w<CR>", { noremap = true, silent = true })
 
 -- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
@@ -52,4 +51,13 @@ vim.keymap.set("n", "<C-q>", function()
 	else
 		vim.cmd("copen")
 	end
+end)
+
+-- Experimental
+vim.keymap.set("n", "<leader>q", function()
+	vim.cmd.quit()
+end)
+
+vim.keymap.set("n", "<leader>w", function ()
+	vim.cmd.write()
 end)

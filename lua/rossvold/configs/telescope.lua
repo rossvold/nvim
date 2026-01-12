@@ -27,13 +27,16 @@ require("telescope").setup({
 				preview_height = 0.4, -- 40% of available lines for preview
 			},
 		},
+		file_ignore_patterns = {
+			"node_modules",
+			".svg",
+			".env",
+			"^drizzle/",
+			"^backup/",
+			"^%.svelte%-kit/",
+		},
 	},
 
-	file_ignore_patterns = {
-		"node_modules",
-		".svg",
-		".env",
-	},
 
 	extensions = {
 		["ui-select"] = {
@@ -54,12 +57,16 @@ vim.keymap.set("n", "<leader>tgc", builtin.git_commits, { desc = "[t]elescope [g
 -- TODO: It would be nice to be able to glob out results here like we do in multigrep.
 vim.keymap.set("n", "<leader>tq", builtin.quickfix, { desc = "[t]elescope [q]uickfix" })
 vim.keymap.set("n", "<leader>tQ", builtin.quickfixhistory, { desc = "[t]elescope [Q]uickfix history" })
-vim.keymap.set("n", "<leader>tS", builtin.live_grep, { desc = "[t]elescope [S]earch live" })
-vim.keymap.set("n", "<space>tS", require "rossvold.telescope.multi-ripgrep")
-vim.keymap.set("n", "<leader>tk", builtin.grep_string, { desc = "[t]telescope grep [k]eyword" })
-vim.keymap.set("n", "<leader>ts", function()
+vim.keymap.set("n", "<leader>ts", builtin.live_grep, { desc = "[t]elescope [S]earch live" })
+vim.keymap.set("n", "<leader>tS", function()
 	builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end)
+vim.keymap.set("n", "<space>tS", require "rossvold.telescope.multi-ripgrep")
+vim.keymap.set("n", "<leader>tk", builtin.grep_string, { desc = "[t]telescope grep [k]eyword" })
 vim.keymap.set("n", "<leader>tgb", builtin.git_branches, { desc = "[t]elescope [g]it [b]ranches" })
 vim.keymap.set("n", "<leader>tb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>tn", "<CMD>Telescope notify<CR>")
+vim.keymap.set("n", "<leader>to", builtin.oldfiles, { desc = "[t]elescope [o]ld files" })
+vim.keymap.set("n", "<leader>tu", builtin.unsaved, { desc = "[t]elescope [o]ld files" })
+
+

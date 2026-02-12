@@ -49,9 +49,16 @@ cmp.setup({
 	},
 
 	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered({
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			winhighlight = "Normal:CmpMenu,FloatBorder:CmpBorder,CursorLine:CmpSel",
+		}),
+		documentation = cmp.config.window.bordered({
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			winhighlight = "Normal:CmpDoc,FloatBorder:CmpBorder",
+		}),
 	},
+
 
 	mapping = {
 		["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -73,6 +80,32 @@ cmp.setup({
 	}, {
 			{ name = "buffer" },
 		}),
+})
+
+-- Highlight groups for better visibility
+vim.api.nvim_set_hl(0, "CmpBorder", {
+	fg = "#6e6a86", -- muted color from rose-pine
+	bg = "#1f1d2e", -- surface color from rose-pine
+	ctermfg = 242,
+	ctermbg = 235,
+})
+
+vim.api.nvim_set_hl(0, "CmpMenu", {
+	bg = "#1f1d2e", -- surface color from rose-pine
+	ctermbg = 235,
+})
+
+vim.api.nvim_set_hl(0, "CmpSel", {
+	bg = "#26233a", -- overlay color from rose-pine
+	fg = "#e0def4", -- text color
+	ctermbg = 236,
+	ctermfg = 15,
+	bold = true,
+})
+
+vim.api.nvim_set_hl(0, "CmpDoc", {
+	bg = "#1f1d2e", -- surface color from rose-pine
+	ctermbg = 235,
 })
 
 -- Setup up vim-dadbod

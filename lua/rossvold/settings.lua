@@ -1,7 +1,7 @@
 local set = vim.opt
-set.smartcase = true
 set.ignorecase = true
-set.hlsearch = false
+set.smartcase = true
+set.hlsearch = true -- Hightlight all mathes when searching with /
 set.incsearch = true
 set.inccommand = "split"
 set.nu = true

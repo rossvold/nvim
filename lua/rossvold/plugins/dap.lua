@@ -17,7 +17,7 @@ return {
 			},
 			{
 				"microsoft/vscode-js-debug", -- JS
-				build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+				build = "npm install --legacy-peer-deps --ignore-scripts && npx gulp vsDebugServerBundle && mv dist out",
 			},
 			-- {
 			-- 	"firefox-devtools/vscode-firefox-debug.git",

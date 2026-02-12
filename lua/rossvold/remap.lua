@@ -12,8 +12,9 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz") -- jump down
 vim.keymap.set("n", "n", "nzzzv") -- Center screen after jumping to next element
 vim.keymap.set("n", "N", "Nzzzv") -- Center screen after jumping to previous element
 vim.keymap.set("n", "gt", "<Nop>") -- Use Ctrl + page up/down
-vim.keymap.set("n", "<C-PageDown>", "<C-PageUp>") -- Previous tab
-vim.keymap.set("n", "<C-PageUp>", "<C-PageDown>") -- Next tab
+
+vim.keymap.set("n", "<C-PageDown>", "<C-PageDown>") -- Previous tab
+vim.keymap.set("n", "<C-PageUp>", "<C-PageUp>") -- Next tab
 
 -- greatest remap ever
 -- Lets me paste over v mode text without copying it.
@@ -30,6 +31,9 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
+-- Clear search highlights
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
+
 -- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 -- Next quicklist item
@@ -39,6 +43,7 @@ vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lprev<CR>zz")
 
+-- THIS IS MOVED TO QUICKER
 -- Toggle qflist
 vim.keymap.set("n", "<C-q>", function()
 	local qf_exists = false

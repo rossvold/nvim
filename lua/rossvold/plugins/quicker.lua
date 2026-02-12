@@ -1,6 +1,11 @@
 return {
   'stevearc/quicker.nvim',
-  event = "FileType qf",
+  ft = "qf",
   ---@module "quicker"
-  opts = {},
+  ---@type quicker.SetupOptions
+  opts = { },
+	config = function()
+		require("rossvold.configs.quicker")
+	end,
+
 }

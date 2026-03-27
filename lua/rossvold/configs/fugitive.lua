@@ -21,14 +21,12 @@ autocmd("FileType", {
 	end,
 })
 
-autocmd("BufWinEnter", {
+autocmd("FileType", {
 	group = rossvold_fugitive,
-	pattern = "*",
+	pattern = "fugitive",
 	desc = "Set keybinds that are exclusive for fugitive",
 	callback = function()
-		if vim.bo.ft ~= "fugitive" then
-			return
-		end
+		vim.notify("setting keybinds for fugitive.")
 
 		local bufnr = vim.api.nvim_get_current_buf()
 		local opts = { buffer = bufnr, remap = false }

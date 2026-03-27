@@ -25,11 +25,10 @@ autocmd("FileType", {
 	group = rossvold_fugitive,
 	pattern = "fugitive",
 	desc = "Set keybinds that are exclusive for fugitive",
-	callback = function()
-		vim.notify("setting keybinds for fugitive.")
+	callback = function(ev)
+		local opts = { buffer = ev.bufnr, remap = false }
 
-		local bufnr = vim.api.nvim_get_current_buf()
-		local opts = { buffer = bufnr, remap = false }
+		vim.notify("setting keybinds for fugitive.")
 
 		vim.keymap.set("n", "<leader>gp", ":Git push -u origin ", opts)
 		vim.keymap.set("n", "<leader>go", ":Git remote add origin ", opts)

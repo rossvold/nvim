@@ -18,23 +18,27 @@ ls.add_snippets("lua", {
 		t(']])'),
 	}),
 
-	s("autocmd", {
-		t('local autocmd = vim.api.nvim_create_autocmd'),
-	}),
+	s("autocmd", fmt([[
+local {node1} = vim.api.nvim_create_augroup("{node2}", {{}})
+local autocmd = vim.api.nvim_create_autocmd]], {
+		node1 = i(1, "group"),
+		node2 = i(2, "GroupName"),
+	}, { repeat_duplicates = true })),
 
 	s("create_autocmd", fmt([[
-local autocmd = vim.api.nvim_create_autocmd
-local {node1} = vim.api.nvim_create_augroup("{node2}", {{}})
-autocmd("{node3}", {{
-	group = {node1},
+autocmd("{node1}", {{
+	group = {node2},
+	pattern = "{node3}",
 	callback = function()
+		local bufnr = vim.api.nvim_get_current_buf()
+		local opts = {{ buffer = bufnr, remap = false }}
 		{node4}
 	end,
 }})
 ]], {
-			node1 = i(1, "group"),
-			node2 = i(2, "AutocmdGroupName"),
-			node3 = i(3, "Bufferevent"),
+			node1 = i(1, "FileType"),
+			node2 = i(2, "group"),
+			node3 = i(3, "pattern"),
 			node4 = i(4, ""),
 		},
 		{

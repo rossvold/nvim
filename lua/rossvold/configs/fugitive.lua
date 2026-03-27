@@ -5,8 +5,8 @@ end
 )
 
 local rossvold_fugitive = vim.api.nvim_create_augroup("rossvold_Fugitive", {})
-
 local autocmd = vim.api.nvim_create_autocmd
+
 autocmd("FileType", {
 	group = rossvold_fugitive,
 	pattern = "gitcommit",

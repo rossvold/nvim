@@ -10,6 +10,7 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("FileType", {
 	group = rossvold_fugitive,
 	pattern = "gitcommit",
+	desc = "Write and quit on <Leader>w, only when committing a msg",
 	callback = function()
 		local bufnr = vim.api.nvim_get_current_buf()
 		local opts = { buffer = bufnr, remap = false }
@@ -22,8 +23,8 @@ autocmd("FileType", {
 
 autocmd("BufWinEnter", {
 	group = rossvold_fugitive,
-	-- Removed group
 	pattern = "*",
+	desc = "Set keybinds that are exclusive for fugitive",
 	callback = function()
 		if vim.bo.ft ~= "fugitive" then
 			return

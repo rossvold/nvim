@@ -3,11 +3,10 @@ require("rossvold.remap")
 require("rossvold.lazy_init") -- Set & remap has to always be in front of lazy_init
 require("rossvold.terminal.terminal")
 
-local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local ibraGroup = augroup("ibraGroup", {})
-local yank_group = augroup("HighlightYank", {})
+local ibraGroup = vim.api.nvim_create_augroup("ibraGroup", {})
+local yank_group = vim.api.nvim_create_augroup("HighlightYank", {})
 
 function R(name)
 	require("plenary.reload").reload_module(name)

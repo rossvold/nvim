@@ -25,8 +25,9 @@ autocmd("FileType", {
 	group = rossvold_fugitive,
 	pattern = "fugitive",
 	desc = "Set keybinds that are exclusive for fugitive",
-	callback = function(ev)
-		local opts = { buffer = ev.bufnr, remap = false }
+	callback = function()
+		local bufnr = vim.api.nvim_get_current_buf()
+		local opts = { buffer = bufnr, remap = false }
 
 		vim.notify("setting keybinds for fugitive.")
 

@@ -15,9 +15,6 @@ set.wrap = false -- Always keep all text visible on screen.
 set.linebreak = true
 
 set.termguicolors = true
--- Cursor
-vim.api.nvim_set_hl(0, 'Cursor1', { fg = 'white', bg = 'white' })  -- Normal mode (white cursor)
-vim.api.nvim_set_hl(0, 'Cursor2', { fg = 'green', bg = 'green' })  -- Insert mode (gray cursor)
 
 vim.opt.guicursor = {
 	"n-v-c-sm:block-cursor1",

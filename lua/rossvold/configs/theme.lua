@@ -37,10 +37,14 @@ local function setup_auto_dark_mode()
 		set_dark_mode = function()
 			vim.api.nvim_set_option_value("background", "dark", {})
 			vim.cmd.colorscheme("rose-pine-moon")
+			vim.api.nvim_set_hl(0, "Cursor1", { fg = "white", bg = "white" })
+			vim.api.nvim_set_hl(0, "Cursor2", { fg = "green", bg = "green" })
 		end,
 		set_light_mode = function()
 			vim.api.nvim_set_option_value("background", "light", {})
 			vim.cmd.colorscheme("catppuccin-latte")
+			vim.api.nvim_set_hl(0, "Cursor1", { fg = "black", bg = "black" })
+			vim.api.nvim_set_hl(0, "Cursor2", { fg = "#00b800", bg = "#00b800" })
 		end,
 	})
 end

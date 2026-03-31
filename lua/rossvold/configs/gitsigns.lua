@@ -73,7 +73,31 @@ require("gitsigns").setup({
 		map("n", "<leader>gb", function()
 			gs.blame_line({ full = true })
 		end)
-		map("n", "<leader>gd", gs.diffthis)
+		map("n", "<leader>gd", function()
+			local has_gitsigns_diff_win = false
+			for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+				local buf = vim.api.nvim_win_get_buf(win)
+				local name = vim.api.nvim_buf_get_name(buf)
+				if name:match("^gitsigns://") then
+					has_gitsigns_diff_win = true
+					break
+				end
+			end
+
+			if vim.wo.diff or has_gitsigns_diff_win then
+				vim.cmd("diffoff!")
+				local current_win = vim.api.nvim_get_current_win()
+				for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+					local buf = vim.api.nvim_win_get_buf(win)
+					local name = vim.api.nvim_buf_get_name(buf)
+					if win ~= current_win and (vim.wo[win].diff or name:match("^gitsigns://")) then
+						vim.api.nvim_win_close(win, false)
+					end
+				end
+				return
+			end
+			gs.diffthis()
+		end)
 		map("n", "<leader>gx", gs.toggle_deleted)
 
 		-- Text object

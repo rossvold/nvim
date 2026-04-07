@@ -69,7 +69,7 @@ require("quicker").setup({
 		return math.floor(math.min(95, vim.o.columns / 2))
 	end,
 	-- How far the header should extend to the right
-	header_length = function(type, start_col)
+	header_length = function(start_col)
 		return vim.o.columns - start_col
 	end,
 

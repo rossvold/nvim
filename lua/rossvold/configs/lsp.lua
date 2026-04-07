@@ -14,111 +14,121 @@ require("mason-lspconfig").setup({
 		"ts_ls",
 		"templ",
 		"sqlls",
+		"vue_ls",
+	},
+	automatic_enable = true, -- Mason-LSPConfig v2 auto-enables servers by default
+})
+
+-- Default handler
+vim.lsp.config("*", {
+	capabilities = capabilities,
+	-- any custom settings...
+})
+
+vim.lsp.config.lua_ls = {
+	capabilities = capabilities,
+	settings = {
+		Lua = {
+			runtime = { version = "Lua 5.1" },
+			diagnostics = {
+				globals = { "vim", "it", "describe", "before_each", "after_each" },
+			},
+		},
+	},
+}
+
+vim.lsp.config.rust_analyzer = {
+	capabilities = capabilities,
+}
+
+vim.lsp.config.html = {
+	capabilities = capabilities,
+	filetypes = { "html", "templ" },
+}
+
+vim.lsp.config.html = {
+	capabilities = capabilities,
+	filetypes = { "html", "templ" },
+}
+
+local vue_plugin = {
+	name = "@vue/typescript-plugin",
+	location = vim.fn.expand("$HOME/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server"),
+	languages = { "vue" },
+}
+
+vim.lsp.config.ts_ls = {
+	capabilities = capabilities,
+	init_options = {
+		plugins = { vue_plugin },
+	},
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+	on_attach = function(client)
+		if vim.bo.filetype == "vue" then
+			client.server_capabilities.semanticTokensProvider.full = false
+		else
+			client.server_capabilities.semanticTokensProvider.full = true
+		end
+	end,
+	settings = {
+		javascript = {
+			inlayHints = {
+				includeInlayEnumMemberValueHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayVariableTypeHints = false,
+			},
+		},
+		typescript = {
+			inlayHints = {
+				includeInlayEnumMemberValueHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+				includeInlayFunctionParameterTypeHints = true,
+				includeInlayParameterNameHints = "all",
+				includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+				includeInlayPropertyDeclarationTypeHints = true,
+				includeInlayVariableTypeHints = false,
+			},
+			tsserver = {
+				exclude = { ".svelte-kit", ".svelte-kit/types/**/*" },
+			},
+		},
 	},
 	handlers = {
-		-- The first entry (without a key) will be the default handler and will be called for each installed server
-		-- that doesn't have a dedicated handler.
-
-		function(server_name) -- default handler (optional)
-			vim.lsp.config[server_name] = {
-				capabilities = capabilities,
-			}
-			vim.lsp.enable(server_name)
-		end, -- Next, is targeted overrides for spesific servers.
-
-		["lua_ls"] = function()
-			vim.lsp.config.lua_ls = {
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						runtime = { version = "Lua 5.1" },
-						diagnostics = {
-							globals = { "vim", "it", "describe", "before_each", "after_each" },
-						},
-					},
-				},
-			}
-			vim.lsp.enable("lua_ls")
-		end,
-
-		["rust_analyzer"] = function()
-			vim.lsp.config.rust_analyzer = {
-				capabilities = capabilities,
-			}
-			vim.lsp.enable("rust_analyzer")
-		end,
-
-		["html"] = function()
-			vim.lsp.config.html = {
-				capabilities = capabilities,
-				filetypes = { "html", "templ" },
-			}
-			vim.lsp.enable("html")
-		end,
-
-		["htmx"] = function()
-			vim.lsp.config.html = {
-				capabilities = capabilities,
-				filetypes = { "html", "templ" },
-			}
-			vim.lsp.enable("html")
-		end,
-
-		["ts_ls"] = function()
-			vim.lsp.config.ts_ls = {
-				capabilities = capabilities,
-				settings = {
-					javascript = {
-						inlayHints = {
-							includeInlayEnumMemberValueHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayVariableTypeHints = false,
-						},
-					},
-					typescript = {
-						inlayHints = {
-							includeInlayEnumMemberValueHints = true,
-							includeInlayFunctionLikeReturnTypeHints = true,
-							includeInlayFunctionParameterTypeHints = true,
-							includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-							includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-							includeInlayPropertyDeclarationTypeHints = true,
-							includeInlayVariableTypeHints = false,
-						},
-						tsserver = {
-							exclude = { ".svelte-kit", ".svelte-kit/types/**/*" },
-						},
-					},
-				},
-				handlers = {
-					["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
-						if result.diagnostics == nil then
-							return
-						end
-						local idx = 1
-						while idx <= #result.diagnostics do
-							local entry = result.diagnostics[idx]
-							if entry.code == 80001 then
-								table.remove(result.diagnostics, idx)
-							else
-								idx = idx + 1
-							end
-						end
-						pcall(function()
-							require("ts-error-translator").translate_diagnostics(nil, result, ctx)
-						end)
-						vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
-					end,
-				},
-			}
-			vim.lsp.enable("ts_ls")
+		["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+			if result.diagnostics == nil then
+				return
+			end
+			local idx = 1
+			while idx <= #result.diagnostics do
+				local entry = result.diagnostics[idx]
+				if entry.code == 80001 then
+					table.remove(result.diagnostics, idx)
+				else
+					idx = idx + 1
+				end
+			end
+			pcall(function()
+				require("ts-error-translator").translate_diagnostics(nil, result, ctx)
+			end)
+			vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
 		end,
 	},
-})
+}
+
+vim.lsp.config.vue_ls = {
+	capabilities = capabilities,
+	init_options = {
+		vue_ls = {
+			hybridMode = true,
+		},
+	},
+}
+
+-- Add more vim.lsp.configs here
 
 vim.diagnostic.config({
 	-- update_in_insert = true,

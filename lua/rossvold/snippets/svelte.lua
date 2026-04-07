@@ -6,7 +6,6 @@ local ls = require "luasnip"
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
-local isn = ls.indent_snippet_node
 
 ls.add_snippets("svelte", {
     s("comment", {

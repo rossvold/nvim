@@ -29,7 +29,7 @@ set.softtabstop = 8
 set.expandtab = false
 set.smartindent = true
 set.list = true
-set.listchars = "tab:| "
+set.listchars = "tab:▏ "
 
 -- Folds
 set.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
@@ -42,13 +42,13 @@ vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 set.backup = false
 set.undofile = true
 
-set.scrolloff = 8
+set.scrolloff = 18
 set.sidescrolloff = 20 -- Holy shid this is so good
 set.isfname:append("@-@")
 
 set.updatetime = 50
 
-set.colorcolumn = "80,100,120"
+set.colorcolumn = "100,120"
 
 vim.cmd([[
 augroup highlight_yank

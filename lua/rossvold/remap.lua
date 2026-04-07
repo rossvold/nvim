@@ -13,8 +13,8 @@ vim.keymap.set("n", "n", "nzzzv") -- Center screen after jumping to next element
 vim.keymap.set("n", "N", "Nzzzv") -- Center screen after jumping to previous element
 vim.keymap.set("n", "gt", "<Nop>") -- Use Ctrl + page up/down
 
-vim.keymap.set("n", "<C-PageDown>", "<C-PageDown>") -- Previous tab
-vim.keymap.set("n", "<C-PageUp>", "<C-PageUp>") -- Next tab
+vim.keymap.set("n", "<C-PageUp>", "<C-PageDown>") -- Next tab
+vim.keymap.set("n", "<C-PageDown>", "<C-PageUp>") -- Previous tab
 
 -- greatest remap ever
 -- Lets me paste over v mode text without copying it.

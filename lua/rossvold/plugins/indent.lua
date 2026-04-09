@@ -33,7 +33,6 @@ return {
 						"switch_statement",
 						"case_statement",
 						"array",
-						"object",
 					},
 				},
 			},

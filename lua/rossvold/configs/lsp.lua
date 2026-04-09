@@ -228,6 +228,7 @@ require("conform").setup({
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 		typescript = { "prettierd", "prettier", stop_after_first = true },
 		svelte = { "prettierd", "prettier", stop_after_first = true },
+		vue = { "prettierd", "prettier", stop_after_first = true },
 	},
 	-- vim.keymap.set leader f to format
 	vim.cmd("nnoremap <leader>f <cmd>lua require('conform').format()<CR>"),

@@ -36,6 +36,7 @@ require("nvim-treesitter.configs").setup({
 		"templ",
 		"python",
 		"sql",
+		"vue",
 	},
 	-- THE GOAT OF VIM STRUCTURAL EDITING. Select, move, quries.
 	textobjects = {

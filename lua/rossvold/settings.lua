@@ -31,16 +31,15 @@ set.smartindent = true
 set.list = true
 -- set.listchars = "tab:▏ " -- GOATED character
 
-set.listchars:append {
-	tab = "▏ ",
-	trail = '·',
-	lead = " ",
-	nbsp = "‿",
-	multispace = " ",
-	extends = "▶",
-	precedes = "◀"
-}
-
+-- set.listchars:append {
+-- 	tab = "▏ ",
+-- 	trail = '·',
+-- 	lead = " ",
+-- 	nbsp = "‿",
+-- 	multispace = " ",
+-- 	extends = "▶",
+-- 	precedes = "◀"
+-- }
 
 -- Folds
 set.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time

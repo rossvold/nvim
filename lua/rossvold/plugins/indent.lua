@@ -32,6 +32,8 @@ return {
 						"with_statement",
 						"switch_statement",
 						"case_statement",
+						"array",
+						"object",
 					},
 				},
 			},
@@ -49,7 +51,6 @@ return {
 				"nvcheatsheet",
 				"dashboard",
 				"alpha",
-				"",
 			},
 			buftypes = {
 				"terminal",

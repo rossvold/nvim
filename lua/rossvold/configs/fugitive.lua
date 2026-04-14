@@ -29,8 +29,6 @@ autocmd("FileType", {
 		local bufnr = vim.api.nvim_get_current_buf()
 		local opts = { buffer = bufnr, remap = false }
 
-		vim.notify("setting keybinds for fugitive.")
-
 		vim.keymap.set("n", "<leader>gp", ":Git push -u origin ", opts)
 		vim.keymap.set("n", "<leader>go", ":Git remote add origin ", opts)
 		vim.keymap.set("n", "<leader>gr", ":Git rebase ", opts)

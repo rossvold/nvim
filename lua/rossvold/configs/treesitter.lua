@@ -93,7 +93,7 @@ require("nvim-treesitter.configs").setup({
 				["Mo"] = "@class.outer",
 				["Mp"] = "@parameter_actual.outer",
 				["Ma"] = "@arguments",
-				["Mt"] = "@element_text", -- HTLM ELEMENT TEXT
+				["Mt"] = "@element_text", -- HTML ELEMENT TEXT
 				["MA"] = "@attribute.outer", -- HTML attribute
 				["Mr"] = "@return.outer",
 				["Me"] = "@element.start",

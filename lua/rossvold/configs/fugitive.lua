@@ -1,5 +1,5 @@
 -- Fugitive
-vim.keymap.set("n", "<leader>gg", function ()
+vim.keymap.set("n", "<leader>GG", function ()
 	vim.cmd([[tab G]])
 end
 )

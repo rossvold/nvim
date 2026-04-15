@@ -62,12 +62,30 @@ local toggle_terminal = function()
 	end
 end
 
-vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>") -- Easily hit escape in terminal mode.
-vim.keymap.set("t", "<C-c>", "<c-\\><c-n>") -- Easily hit escape in terminal mode.
-vim.keymap.set("n", "<Leader>,t", function() -- Open terminal in new tab
+-- vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>") -- Easily hit escape in terminal mode.
+-- vim.keymap.set("t", "<C-c>", "<c-\\><c-n>") -- Easily hit escape in terminal mode.
+
+vim.keymap.set("n", "<Leader>gg", function()
+	-- Open a new tab and launch lazygit in a terminal, then enter insert mode
 	vim.cmd.tabnew()
-	vim.cmd.term()
+	local lazygit_tab = vim.api.nvim_get_current_tabpage()
+	vim.cmd.term({ 'lazygit' })
+	vim.cmd('startinsert')
+
+	-- When lazygit closes in the new tab, close that tab.
+	vim.api.nvim_create_autocmd('TermClose', {
+		buffer = 0,
+		once = true,
+		callback = function()
+			-- Only close the tab we originally opened for lazygit
+			if vim.api.nvim_tabpage_is_valid(lazygit_tab) then
+				vim.api.nvim_set_current_tabpage(lazygit_tab)
+				vim.cmd.tabclose()
+			end
+		end,
+	})
 end)
+
 vim.keymap.set("n", "<Leader>,w", function() -- Open small terminal at bottom
 	vim.cmd.vnew()
 	vim.cmd.term()

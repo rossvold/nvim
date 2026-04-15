@@ -52,7 +52,7 @@ vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 set.backup = false
 set.undofile = true
 
-set.scrolloff = 18
+set.scrolloff = 14
 set.sidescrolloff = 20 -- Holy shid this is so good
 set.isfname:append("@-@")
 

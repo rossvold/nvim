@@ -2,7 +2,6 @@ local capabilities = nil
 if pcall(require, "cmp_nvim_lsp") then
 	capabilities = require("cmp_nvim_lsp").default_capabilities()
 end
-local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -46,14 +45,11 @@ vim.lsp.config.html = {
 	filetypes = { "html", "templ" },
 }
 
-vim.lsp.config.html = {
-	capabilities = capabilities,
-	filetypes = { "html", "templ" },
-}
-
 local vue_plugin = {
 	name = "@vue/typescript-plugin",
-	location = vim.fn.expand("$HOME/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server"),
+	location = vim.fn.expand(
+		"$HOME/.local/share/nvim/mason/packages/vue-language-server/node_modules/@vue/language-server"
+	),
 	languages = { "vue" },
 }
 
@@ -213,12 +209,19 @@ autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>vd", function()
 			vim.diagnostic.open_float()
 		end, opts)
-		local next_diagnostic_repeat, prev_diagnostic_repeat =
-			ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev) -- Makes moves repeatable
-		vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_next) -- moves regardless of the last direction
-		vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_previous)
-		vim.keymap.set({ "n", "x", "o" }, "md", next_diagnostic_repeat) -- Has to be below repeatable pair
-		vim.keymap.set({ "n", "x", "o" }, "Md", prev_diagnostic_repeat)
+
+		-- Use the global ts_repeat_move exported by treesitter-textobjects config
+		-- This makes diagnostic jumps repeatable with , and ;
+		if _G.ts_repeat_move then
+			local next_diagnostic_repeat, prev_diagnostic_repeat =
+				_G.ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
+			vim.keymap.set({ "n", "x", "o" }, "md", next_diagnostic_repeat, opts)
+			vim.keymap.set({ "n", "x", "o" }, "Md", prev_diagnostic_repeat, opts)
+		else
+			-- Fallback if textobjects hasn't loaded yet
+			vim.keymap.set({ "n", "x", "o" }, "md", vim.diagnostic.goto_next, opts)
+			vim.keymap.set({ "n", "x", "o" }, "Md", vim.diagnostic.goto_prev, opts)
+		end
 	end,
 })
 

@@ -4,7 +4,6 @@ return {
 		"mason-org/mason.nvim",
 		"mason-org/mason-lspconfig.nvim",
 		{ "j-hui/fidget.nvim", opts = {} }, -- Shows LSP activity on the bottom right
-		"nvim-treesitter/nvim-treesitter-textobjects", -- Extends tresitter selection
 		"stevearc/conform.nvim",
 		"rust-lang/rust.vim",
 	},

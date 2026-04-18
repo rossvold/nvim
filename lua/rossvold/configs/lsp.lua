@@ -124,6 +124,10 @@ vim.lsp.config.vue_ls = {
 	},
 }
 
+vim.lsp.config.svelte = {
+	capabilities = capabilities,
+}
+
 -- Add more vim.lsp.configs here
 
 vim.diagnostic.config({
@@ -184,11 +188,11 @@ autocmd("LspAttach", {
 			vim.lsp.buf.rename()
 		end, opts)
 		vim.keymap.set("n", "<F5>", function()
-			vim.cmd.LspRestart()
+			vim.cmd([[lsp restart]])
 		end, opts)
 		-- Display
 		vim.keymap.set("n", "gl", function()
-			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			vim.lsp.inlay_hint.enable()
 		end, opts)
 
 		-- Quickfix related actions are always starting with gr
@@ -212,16 +216,9 @@ autocmd("LspAttach", {
 
 		-- Use the global ts_repeat_move exported by treesitter-textobjects config
 		-- This makes diagnostic jumps repeatable with , and ;
-		if _G.ts_repeat_move then
-			local next_diagnostic_repeat, prev_diagnostic_repeat =
-				_G.ts_repeat_move.make_repeatable_move_pair(vim.diagnostic.goto_next, vim.diagnostic.goto_prev)
-			vim.keymap.set({ "n", "x", "o" }, "md", next_diagnostic_repeat, opts)
-			vim.keymap.set({ "n", "x", "o" }, "Md", prev_diagnostic_repeat, opts)
-		else
-			-- Fallback if textobjects hasn't loaded yet
-			vim.keymap.set({ "n", "x", "o" }, "md", vim.diagnostic.goto_next, opts)
-			vim.keymap.set({ "n", "x", "o" }, "Md", vim.diagnostic.goto_prev, opts)
-		end
+		-- Fallback if textobjects hasn't loaded yet
+		vim.keymap.set({ "n", "x", "o" }, "md", vim.diagnostic.goto_next, opts)
+		vim.keymap.set({ "n", "x", "o" }, "Md", vim.diagnostic.goto_prev, opts)
 	end,
 })
 

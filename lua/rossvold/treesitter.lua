@@ -1,15 +1,16 @@
--- luacheck: globals vim
----@diagnostic disable: undefined-global
--- Core treesitter utilities: query-to-quickfix, inspect-tree toggle
--- NOTE: No longer depends on nvim-treesitter plugin (archived)
--- Uses native Neovim 0.12 treesitter APIs only
-
+-- POS guy archived nvim-treesitter/nvim-treesitter, so now we do it ourselves....
 local ts = vim.treesitter
 
 -- =============================================================================
+-- Load treesitter highlights
+-- =============================================================================
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { '<filetype>' },
+  callback = function() vim.treesitter.start() end,
+})
+-- =============================================================================
 -- QUERY TO QUICKFIX
 -- =============================================================================
-
 ---@param filetype string
 ---@return string|nil
 local function ft_to_lang(filetype)
@@ -142,7 +143,6 @@ end
 -- =============================================================================
 -- INSPECT TREE TOGGLE
 -- =============================================================================
-
 local inspect_tree_buf = nil
 vim.keymap.set("n", "<Leader>i", function()
 	-- Check if InspectTree window is already open

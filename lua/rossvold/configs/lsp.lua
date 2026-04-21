@@ -214,11 +214,12 @@ autocmd("LspAttach", {
 			vim.diagnostic.open_float()
 		end, opts)
 
-		-- Use the global ts_repeat_move exported by treesitter-textobjects config
-		-- This makes diagnostic jumps repeatable with , and ;
-		-- Fallback if textobjects hasn't loaded yet
-		vim.keymap.set({ "n", "x", "o" }, "md", vim.diagnostic.goto_next, opts)
-		vim.keymap.set({ "n", "x", "o" }, "Md", vim.diagnostic.goto_prev, opts)
+		vim.keymap.set({ "n", "x", "o" }, "md", function()
+			vim.diagnostic.jump({ count = 1, float = true })
+		end, opts)
+		vim.keymap.set({ "n", "x", "o" }, "Md", function()
+			vim.diagnostic.jump({ count = -1, float = true })
+		end, opts)
 	end,
 })
 

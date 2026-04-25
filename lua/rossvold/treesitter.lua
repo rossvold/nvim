@@ -1,12 +1,14 @@
--- POS guy archived nvim-treesitter/nvim-treesitter, so now we do it ourselves....
 local ts = vim.treesitter
 
 -- =============================================================================
--- Load treesitter highlights
+-- Load treesitter highlights (Neovim core TS; no nvim-treesitter highlight = {})
+-- Pattern must be real filetypes — "<filetype>" was a doc placeholder and matched nothing.
 -- =============================================================================
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { '<filetype>' },
-  callback = function() vim.treesitter.start() end,
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
+	end,
 })
 -- =============================================================================
 -- QUERY TO QUICKFIX
@@ -69,8 +71,14 @@ local function query_to_qflist(capture_name, fallback_query)
 				end
 				ts_query = parsed
 			else
-				vim.notify(("Missing capture '%s' for language '%s'. Add it under after/queries/%s/textobjects.scm.")
-					:format(capture_name, lang, lang), vim.log.levels.WARN)
+				vim.notify(
+					("Missing capture '%s' for language '%s'. Add it under after/queries/%s/textobjects.scm."):format(
+						capture_name,
+						lang,
+						lang
+					),
+					vim.log.levels.WARN
+				)
 				return
 			end
 		end
@@ -84,8 +92,13 @@ local function query_to_qflist(capture_name, fallback_query)
 			end
 			ts_query = parsed
 		else
-			vim.notify(("No textobjects query for language '%s'. Add one under after/queries/%s/textobjects.scm.")
-				:format(lang, lang), vim.log.levels.WARN)
+			vim.notify(
+				("No textobjects query for language '%s'. Add one under after/queries/%s/textobjects.scm."):format(
+					lang,
+					lang
+				),
+				vim.log.levels.WARN
+			)
 			return
 		end
 	end

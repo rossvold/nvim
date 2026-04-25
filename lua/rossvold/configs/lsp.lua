@@ -40,6 +40,10 @@ vim.lsp.config.rust_analyzer = {
 	capabilities = capabilities,
 }
 
+vim.lsp.config.gopls = {
+	capabilities = capabilities,
+}
+
 vim.lsp.config.html = {
 	capabilities = capabilities,
 	filetypes = { "html", "templ" },

@@ -5,13 +5,20 @@ return {
 		build = ":TSUpdate",
 		branch = "main",
 		config = function()
-			require("nvim-treesitter").install({ "c", "rust", "go", "javascript", "typescript", "vue", "svelte", "zig" })
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = { "<filetype>" },
-				callback = function()
-					vim.treesitter.start()
-				end,
+			require("nvim-treesitter").install({
+				"c",
+				"rust",
+				"go",
+				"gomod",
+				"gosum",
+				"gowork",
+				"javascript",
+				"typescript",
+				"vue",
+				"svelte",
+				"zig",
 			})
+			-- Highlights: see lua/rossvold/treesitter.lua (FileType → vim.treesitter.start)
 		end,
 	},
 	{
